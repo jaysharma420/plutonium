@@ -3,36 +3,91 @@ const abc = require('../introduction/intro')
 const router = express.Router();
 
 router.get('/test-me', function (req, res) {
-    console.log('My batch is', abc.name)
-    abc.printName()
-    logger.welcome()
-
-    res.send('My second ever api!')
+    res.send('My first ever api!')
+});
+ 
+// ==================================PROBLEN NO. 1 ===========================================
+router.get('/movies', function (req, res) {
+    let movie = ["pushpa","kgf","saaho","vikram","kgf","kaithi"]
+    res.send(movie)
 });
 
-router.get('/students', function (req, res){
-    let students = ['Sabiha', 'Neha', 'Akash']
-    res.send(students)
-})
+// ==================================PROBLEN NO. 2 ===========================================
 
-router.get('/student-details/:name', function(req, res){
-    /*
-    params is an attribute inside request that contains 
-    dynamic values.
-    This value comes from the request url in the form of an 
-    object where key is the variable defined in code 
-    and value is what is sent in the request
-    */
+router.get('/movies/:indexNumber', function (req, res) {
+    let movie = ["pushpa","kgf","saaho","vikram","kgf","kaithi"]
+    console.log(req.params.indexNumber);
+    res.send(movie[req.params.indexNumber])
+});
 
-    let requestParams = req.params
+// ==================================PROBLEN NO. 3 ===========================================
 
-    // JSON strigify function helps to print an entire object
-    // We can use any ways to print an object in Javascript, JSON stringify is one of them
-    console.log("This is the request "+ JSON.stringify(requestParams))
-    let studentName = requestParams.name
-    console.log('Name of the student is ', studentName)
-    
-    res.send('Dummy response')
-})
+router.get('/movies/:indexNumber', function (req, res) {
+    let movie = ["pushpa","kgf","saaho","vikram","kgf","kaithi"]
+    let arrlength = movie.length
+    req.params.indexNumber = Number(req.params.indexNumber)
+    console.log(req.params.indexNumber);
+    console.log(arrlength);
+    console.log(typeof(req.params.indexNumber));
+    console.log(typeof(arrlength));
+    if (typeof(req.params.indexNumber) !== "number") {
+        res.send("pls enter only number in the place of indexnumber")
+    } else {
+     if (req.params.indexNumber<arrlength) {
+    res.send(movie[req.params.indexNumber])    
+    }else{res.send("pls enter correct index")}
+    }
+});
+
+// ==================================PROBLEN NO. 4 ===========================================
+
+router.get('/films', function (req, res) {
+   let obj =  [ {
+        "id": 1,
+        "name": "The Shining"
+       }, {
+        "id": 2,
+        "name": "Incendies"
+       }, {
+        "id": 3,
+        "name": "Rang de Basanti"
+       }, {
+        "id": 4,
+        "name": "Finding Nemo"
+       }]
+       res.send(obj)     
+});
+
+// ==================================PROBLEN NO. 5 ===========================================
+
+router.get('/films/:filmId', function (req, res) {
+    let obj =  [ {
+         "id": 1,
+         "name": "The Shining"
+        }, {
+         "id": 2,
+         "name": "Incendies"
+        }, {
+         "id": 3,
+         "name": "Rang de Basanti"
+        }, {
+         "id": 4,
+         "name": "Finding Nemo"
+        }]
+
+        console.log(obj[0].id);
+        console.log(obj[1]);
+        console.log(obj.length);
+        console.log(req.params.filmId);
+
+for (let i = 0; i < obj.length; i++) {
+    if (obj[i].id != req.params.filmId) {
+        continue 
+    }else 
+    { res.send(obj[i]) }
+}
+res.send("pls enter correct film id")
+
+ });
 
 module.exports = router;
