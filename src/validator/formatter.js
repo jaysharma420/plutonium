@@ -10,14 +10,6 @@ let changeToUpperCase= function(pq){
 }
 
 
-
-
-
-
-
-
-
-
 module.exports.trim=trim
 module.exports.changetoLowerCase = changetoLowerCase
 module.exports.changeToUpperCase = changeToUpperCase
