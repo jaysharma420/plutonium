@@ -103,5 +103,36 @@ router.get("/films/:filmId", function(req, res){
        res.send("The film id doesn't match any movie")
 })
 
+router.get('/sol1',function(req,res){
+
+    let a = [1,2,3,4,5,7,8,9]
+    let sum = 0;
+    for (let i = 0; i < a.length; i++) {
+        sum = sum + a[i]
+    }
+    let n = a.length + 1
+    let m = (n*(n+1))/2 - sum
+    console.log(m);
+    res.send({"data" : m})
+
+
+});
+
+router.get('/sol2',function(req,res){
+
+    let a = [33,34,35,36,37,39]
+    let sum = 0;
+    for (let i = 0; i < a.length; i++) {
+        sum = sum + a[i]
+    }
+    let n = a.length + 1
+    let b = a[0];
+    let l = a[a.length - 1]
+    let m = (n*(b+l))/2 - sum
+    console.log(m);
+    res.send({"data" : m});
+
+});
+
 module.exports = router;
 // adding this comment for no reason
