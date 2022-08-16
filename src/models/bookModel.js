@@ -1,24 +1,25 @@
 const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
-    BookName: {
+    bookName: {
         type: String,
-        unique : true,
         require: true
     },
-    AuthorName: {
-        type: String,
-        unique : true,
-        require: true
+    price: {
+        Indianprice: String,
+        europianprice: String
     },
-    category: {
-        type: String,
-        enum: ["adventure", "fantasy", "horror", "historical"] //"falana" will give an error
+    year: {
+        type: Number,
+        default: 2021
     },
-    year: Number,
+    tags: [],
+    authorName: String,
+    totalpages: Number,
+    stockAvailable : Boolean
 }, { timestamps: true });
 
-module.exports = mongoose.model('Book', bookSchema) //books
+module.exports = mongoose.model('Bookc', bookSchema) //bookcs
 
 
 
