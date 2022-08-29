@@ -29,6 +29,12 @@ res.send({status:true,msg:token})
 
 
 const getuser = async function(req,res){
+    let token = req.headers["x-auth-token"]
+    if(!token) return res.send({status:false,msg:"x-auth-token key is not present in headers"})
+    
+    let decodetoken = jwt.verify(token,"this is the most important secret key")
+    if(!decodetoken) return res.send({status:false,msg:"token is not verified"})
+
     let user = req.params.userId
     if(!user) return res.send({status:false,msg:"user id is not present in path-params"})
     
@@ -38,8 +44,18 @@ res.send({status:true,msg:udata})
 }
 
 const update = async function(req,res){
+    let token = req.headers["x-auth-token"]
+    if(!token) return res.send({status:false,msg:"x-auth-token key is not present in headers"})
+    
+    let decodetoken = jwt.verify(token,"this is the most important secret key")
+    if(!decodetoken) return res.send({status:false,msg:"token is not verified"})
 
     let user = req.params.userId
+    if(!user) return res.send({status:false,msg:"user id is not present in path-params"})
+    
+    let udata = await userModel.findById(user)
+    if(!udata) return res.send({status:false,msg:"user id is not valid"})
+
 
 let data = req.body
 if(!(Object.keys(data).length > 0))return res.send({status:false,msg:"no data present to update"})
@@ -53,7 +69,18 @@ res.send({status:"updated data",msg:updata})
 }
 
 const deletedata = async function(req,res){
+    let token = req.headers["x-auth-token"]
+    if(!token) return res.send({status:false,msg:"x-auth-token key is not present in headers"})
+    
+    let decodetoken = jwt.verify(token,"this is the most important secret key")
+    if(!decodetoken) return res.send({status:false,msg:"token is not verified"})
+
     let user = req.params.userId
+    if(!user) return res.send({status:false,msg:"user id is not present in path-params"})
+    
+    let udata = await userModel.findById(user)
+    if(!udata) return res.send({status:false,msg:"user id is not valid"})
+
    
     let updata = await userModel.findOneAndUpdate(
         {_id:user},
