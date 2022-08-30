@@ -3,31 +3,24 @@ const userModel = require("../models/userModel");
 
 
 const createuser = async function (req, res) {
-    try {
     let data = req.body
     let savedata = await userModel.create(data)
     res.send({ status: true, msg: savedata })
-} catch (err) {
-    return res.status(500).send({ status: "false", msg: err.message })
-}
+
 }
 
 const getuser = async function (req, res) {
-try {
     let user = req.params.userId
     if (!user) return res.send({ status: false, msg: "user id is not present in path-params" })
 
     let udata = await userModel.findById(user)
     if (!udata) return res.send({ status: false, msg: "user id is not valid" })
     res.send({ status: true, msg: udata })
-} catch (err) {
-    return res.status(500).send({ status: "false", msg: err.message })
-}
+
 }
 
 const update = async function (req, res) {
 
-try {
     let user = req.params.userId
     if (!user) return res.send({ status: false, msg: "user id is not present in path-params" })
 
@@ -44,15 +37,12 @@ try {
         { new: true }
     )
     res.send({ status: "updated data", msg: updata })
-} catch (err) {
-    return res.status(500).send({ status: "false", msg: err.message })
-}
+
 
 }
 
 const deletedata = async function (req, res) {
 
-    try{
     let user = req.params.userId
     if (!user) return res.send({ status: false, msg: "user id is not present in path-params" })
 
@@ -66,9 +56,7 @@ const deletedata = async function (req, res) {
     )
     res.send({ status: "data deleted", msg: updata })
 
-} catch (err) {
-    return res.status(500).send({ status: "false", msg: err.message })
-}
+
 }
 module.exports.createuser = createuser
 module.exports.getuser = getuser
