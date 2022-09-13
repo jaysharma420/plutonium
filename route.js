@@ -8,6 +8,10 @@ router.get('/test', (req,res)=>
 
 router.post('/functionup/colleges',createCollege)
 
+router.post('/functionup/interns',createInterns)
+
+router.get('/functionup/collegeDetails',getCollegeDetails)
+
 
 
 module.exports = router;

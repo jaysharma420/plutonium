@@ -1,6 +1,6 @@
 const college = require('../models/CollegeModel')
 
-//validation by salman
+//validation by => JAY Sharama
 const createCollege = async (req,res)=>{
 
     try{
@@ -14,10 +14,6 @@ const createCollege = async (req,res)=>{
     }catch(err){
         res.status(500).send({status:false,message:err.message})
     }
-
-   
-
-
 }
 
 
