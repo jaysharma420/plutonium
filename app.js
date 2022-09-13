@@ -18,4 +18,4 @@ mongoose.connect('mongodb+srv://richardwork:2YLjcp0favzUASR9@cluster3.bli4t.mong
 
 app.use('/',route)
 
-app.listen(PORT,()=>console.log(`Server running on ${PORT}`))
+app.listen(PORT,()=>console.log(`Server listining to  ${PORT}`))
