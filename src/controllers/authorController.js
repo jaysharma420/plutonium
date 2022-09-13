@@ -2,7 +2,8 @@ const authorModel = require("../models/authorModel")
 const jwt = require('jsonwebtoken')
 
 let regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/
-let regpass = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#&$%?]).*$/
+let regpass = /^.*(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#&$%?]).*$/
+
 let regname = /^[a-zA-Z]+([_ -]?[a-zA-Z])*$/
 
 const createAuthor = async function (req, res) {
@@ -35,11 +36,15 @@ const createAuthor = async function (req, res) {
         if (!regpass.test(data.password)) return res.status(400).send({ status: false, msg: "password must contain 8 letters one uppercase,one lowercase,one number and special character !@#&$%? " })
 
         let author = await authorModel.create(data)
+        // console.log({...author});
+        // author = author.toObject()
+        // author.age = 20
+        // console.log(author);
         return res.status(201).send({ status: true, data: author })
 
     }
     catch (err) {
-        res.status(500).send({ status: false, msg: err.message })
+        return res.status(500).send({ status: false, msg: err.message })
     }
 }
 
@@ -57,7 +62,7 @@ const loginAuthor = async function (req, res) {
         
         let token = jwt.sign({id:authorData._id },"importent key")
 
-        res.status(201).send({status:true,data:{token:token}})
+        res.status(200).send({status:true,data:{token:token}})
     }
     catch (err) {
         return res.status(500).send({ status: false, msg: err.message })

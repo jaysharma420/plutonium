@@ -11,6 +11,7 @@ const createBlogs = async function (req, res) {
         if (Object.keys(req.body).length == 0) return res.status(400).send({ status: false, msg: "data is not given" })
 
         const { title, body, authorId, tags, category, subcategory, isDeleted, isPublished, publishedAt, deletedAt } = req.body
+        // title = title.trim()
         if (!authorId) return res.status(400).send({ status: false, msg: "AuthorId is Mendatory" })
         if (!mongoose.Types.ObjectId.isValid(authorId)) return res.status(400).send({ status: false, msg: "AuthorId is not Valid" })
 
@@ -143,10 +144,10 @@ const deleteBlogsById = async function (req, res) {
         let blogData = await blogModel.findOneAndUpdate({ $and: [{ _id: blogId }, { isDeleted: false }] }, { isDeleted: true, deletedAt: Date.now() }, { new: true })
         if (!blogData)
             return res.status(404).send({ status: false, msg: "DATA NOT FOUND" })
-        res.status(200).send()
+       return res.status(200).send()
     }
     catch (err) {
-        res.status(500).send({ status: false, msg: "server side error" })
+       return res.status(500).send({ status: false, msg: "server side error" })
     }
 
 }
@@ -157,7 +158,7 @@ const deleteBlogsByFilter = async function (req, res) {
     try {
         
         let queryData = req.query
-        let blogData = await blogModel.updateMany({ $and: [queryData, { isPublished: false, isDeleted: false }] }, { $set: { isDeleted: true, deletedAt: Date.now() } })
+        let blogData = await blogModel.updateMany({ $and: [queryData, {isDeleted: false }] }, { $set: { isDeleted: true, deletedAt: Date.now() } })
         if (blogData.modifiedCount == 0)
             return res.status(404).send({ status: false, msg: "DATA NOT FOUND" })
         return res.status(200).send({ status: true, mgs: "Data deleted completed" })

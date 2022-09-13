@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const blogSchema = mongoose.Schema({
     title:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     body:{
         type:String,
@@ -20,7 +21,10 @@ const blogSchema = mongoose.Schema({
         required:true
     },
     subcategory:[String],
-    deletedAt:Date,
+    deletedAt:{
+        type:Date,
+        default:null
+    },
     isDeleted:{
         type:Boolean,
         default:false
