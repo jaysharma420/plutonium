@@ -11,7 +11,6 @@ const createBlogs = async function (req, res) {
         if (Object.keys(req.body).length == 0) return res.status(400).send({ status: false, msg: "data is not given" })
 
         const { title, body, authorId, tags, category, subcategory, isDeleted, isPublished, publishedAt, deletedAt } = req.body
-        // title = title.trim()
         if (!authorId) return res.status(400).send({ status: false, msg: "AuthorId is Mendatory" })
         if (!mongoose.Types.ObjectId.isValid(authorId)) return res.status(400).send({ status: false, msg: "AuthorId is not Valid" })
 
@@ -80,10 +79,10 @@ const getBlogs = async function (req, res) {
         }
         let result = await blogModel.find({ $and: [findData, { isDeleted: false, isPublished: true }] });
         if (result.length == 0) return res.status(404).send({ status: false, msg: "DATA NOT FOUND" })
-        res.status(200).send({ status: true, data: result })
+       return res.status(200).send({ status: true, data: result })
     }
     catch (err) {
-        res.status(500).send({ status: false, msg: err.message })
+       return  res.status(500).send({ status: false, msg: err.message })
     }
 }
 // 3) put) update blogs...
@@ -131,10 +130,10 @@ const updateBlogs = async function (req, res) {
             blogTags.subcategory = subcategory
         }
         let saveddata = await blogModel.findOneAndUpdate({ _id: blogId }, { $set: blogData, $addToSet: blogTags }, { new: true })
-        res.status(200).send({ status: true, data: saveddata })
+        return res.status(200).send({ status: true, data: saveddata })
     }
     catch (err) {
-        res.status(500).send({ status: false, msg: err.message })
+       return  res.status(500).send({ status: false, msg: err.message })
     }
 }
 
@@ -166,7 +165,7 @@ const deleteBlogsByFilter = async function (req, res) {
         let blogData = await blogModel.updateMany({ $and: [queryData, {isDeleted: false }] }, { $set: { isDeleted: true, deletedAt: Date.now() } })
         if (blogData.modifiedCount == 0)
             return res.status(404).send({ status: false, msg: "DATA NOT FOUND" })
-        return res.status(200).send({ status: true, mgs: "Data deleted completed" })
+        return res.status(200).send({ status: true, mgs: "Data has been deleted" })
     }
     catch (err) {
         return res.status(500).send({ status: false, msg: err.message })

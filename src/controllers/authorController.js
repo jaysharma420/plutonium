@@ -54,14 +54,14 @@ const loginAuthor = async function (req, res) {
 
         let password = req.body.password
         if (!password) return res.status(400).send({ status: false, msg: "Password is Mendatory" })
-
+// console.log(email);
+// console.log(password);
         let authorData = await authorModel.findOne({ email: email, password: password })
-
         if(!authorData)   return res.status(404).send({ status: false, msg: "DATA NOT FOUND" })
         
         let token = jwt.sign({id:authorData._id },"importent key")
 
-        res.status(200).send({status:true,data:{token:token}})
+     return   res.status(200).send({status:true,data:{token:token}})
     }
     catch (err) {
         return res.status(500).send({ status: false, msg: err.message })
