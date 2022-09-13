@@ -4,5 +4,32 @@ const mongoose = require('mongoose')
 const interSchema = new mongoose.Schema({
 
     name: {type:String,
-       required:"enter the "}, email: {mandatory, valid email, unique}, mobile: {mandatory, valid mobile number, unique}, collegeId: {ObjectId, ref to college model, isDeleted: {boolean, default: false}}
-})
+       required:"enter the your name",
+       trim:true
+     }, 
+     email: {
+        
+        type:String,
+        required:"Plese Enter the email",
+         unique:true,
+         trim:true
+      },
+       mobile: {
+        type:Number,
+        required :"Please Enter the mobile Number",
+          unique:true,
+        trim:true
+    },
+     collegeId: {
+        type:ObjectId,
+         ref :"College", 
+     },
+
+     isDeleted:{
+        type:Boolean,
+         default: false}
+     },{timestamps:true}
+)
+
+
+module.exports = mongoose.model("Interns",interSchema)
