@@ -2,46 +2,50 @@ const collegeModel = require("../models/CollegeModel");
 const internsModel = require("../models/internsModel");
 
 //validation by => JAY Sharama
+;
+
+const regname = /^[a-zA-Z]+([_-]?[a-zA-Z])*$/
+const regfname = /^[a-zA-Z]+([_ -]?[a-zA-Z])*$/
+let urlreg = /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i
+
 const createCollege = async (req, res) => {
   try {
     let data = req.body;
 
-    const datas = await college.create(data);
+    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "please provide data" })
 
-    res.status(201).send({ status: true, data: datas });
+    const { name, fullName, logoLink ,isDeleted} = data
+
+    if (!name) return res.status(400).send({ status: false, message: "please provide name" })
+
+    if (typeof (name) != "string") return res.status(400).send({ status: false, message: "pls provide name in string type" })
+    if (!regname.test(name.trim())) return res.status(400).send({ status: false, message: "plese provide name in a correct format" })
+    let nmdata = await collegeModel.findOne({ name: name })
+    if (nmdata) return res.status(400).send({ status: false, message: "this name is already present" })
+
+    if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
+    if (typeof (fullName) != "string") return res.status(400).send({ status: false, message: "pls provide fullname in string type" })
+    if (!regfname.test(fullName.trim())) return res.status(400).send({ status: false, message: "plese provide fullname in a correct format" })
+
+    if (!logoLink) return res.status(400).send({ status: false, message: "please provide logolink" })
+    if (typeof (logoLink) != "string") return res.status(400).send({ status: false, message: "pls provide logolink in string type" })
+    if (!urlreg.test(logoLink)) return res.status(400).send({ status: false, message: "plese provide logolink in a correct format" })
+
+    if(isDeleted){
+      if(typeof(isDeleted) != "boolean") return res.status(400).send({ status: false, message: "pls provide isdeleted in boolean type" })
+    }
+
+    const datas = await collegeModel.create(data);
+    return res.status(201).send({ status: true, data: datas });
   } catch (err) {
-    res.status(500).send({ status: false, message: err.message });
+    return res.status(500).send({ status: false, message: err.message });
   }
 };
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //------------------⭐GET/collegeDetails⭐---------------------------//
 
-//get CollegeDetails by Richard
-/*const createIntern = async (req,res)=>{
-    let data = req.body
-    const datas = await intern.create(data)
-    res.send({data:datas})module.exports = {createIntern}
-}*/
 
 const getCollegeDetails = async (req, res) => {
   try {
@@ -60,7 +64,7 @@ const getCollegeDetails = async (req, res) => {
     };
 
     if (!isValidName(collegeName))
-      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowerCase",});
+      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
 
      const collegename = await collegeModel.findOne({ name: collegeName });
 
