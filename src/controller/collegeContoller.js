@@ -40,7 +40,7 @@ const createCollege = async (req, res) => {
 /*const createIntern = async (req,res)=>{
     let data = req.body
     const datas = await intern.create(data)
-    res.send({data:datas})
+    res.send({data:datas})module.exports = {createIntern}
 }*/
 
 const getCollegeDetails = async (req, res) => {
@@ -84,6 +84,6 @@ const getCollegeDetails = async (req, res) => {
   catch (err) {return res.status(500).send({ status: false, msg: err.message }); }
 };
 
-// module.exports = {createIntern}
+
 
 module.exports = { createCollege, getCollegeDetails };
