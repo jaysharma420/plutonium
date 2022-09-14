@@ -1,5 +1,8 @@
 
-const college = require('../models/CollegeModel')
+const collegeModel = require('../models/CollegeModel')
+const internsModel = require('../models/internsModel')
+
+
 
 //validation by => JAY Sharama
 const createCollege = async (req,res)=>{
@@ -46,12 +49,25 @@ const getCollegeDetails = async(req,res)=>{
 try{
     const college = req.query.collegeName
 
-    const  collegeName = await college.findOne({name:college})
+    const  collegeName = await collegeModel.findOne({name:college})
+
+    const{name,fullName,logoLink} = collegeName
+
+    
+
+    const intern = await internsModel.find({collegeId:collegeName._id}).select({name:1,email:1,mobile:1})
 
 
-    res.send({data:collegeName})
+   const data = {
+    name:name,
+    fullName:fullName,
+   logoLink:logoLink,
+   interns:intern.length ? intern:{msg:"0 application from this collge"}
+   
+   }
 
 
+   res.send({data:data})
 
 
 
