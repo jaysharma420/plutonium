@@ -60,12 +60,11 @@ const getCollegeDetails = async (req, res) => {
     };
 
     if (!isValidName(collegeName))
-      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowerCase",});
+      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
 
      const collegename = await collegeModel.findOne({ name: collegeName });
 
-    if (!collegename)return res.status(404)
-        .send({ status: false, msg: "This College not Found" });
+    if (!collegename)return res.status(404).send({ status: false, msg: "This College not Found" });
 
     const { name, fullName, logoLink } = collegename;
 
