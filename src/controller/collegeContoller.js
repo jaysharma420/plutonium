@@ -14,6 +14,26 @@ const createCollege = async (req, res) => {
   }
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //------------------⭐GET/collegeDetails⭐---------------------------//
 
 //get CollegeDetails by richard
@@ -32,19 +52,15 @@ const getCollegeDetails = async (req, res) => {
     const clgName = req.query;
     let { collegeName } = req.query;
 
-    if (!collegeName)
-      return res
-        .status(400)
-        .send({ status: false, msg: "CollgeName is required" });
+    if (!collegeName)return res.status(400).send({ status: false, msg: "CollgeName is required" });
 
     if (Object.keys(clgName).length > 1)
       return res.status(400).send({ status: false, msg: "enter single query" });
 
     const isValidName = function (value) {
-      if (!(value === value.toLowerCase())) {
-        return false;
-      }
-      return true;
+      if (!(value === value.toLowerCase())){
+        return false;}
+        return true;
     };
 
     if (!isValidName(collegeName))
@@ -65,15 +81,11 @@ const getCollegeDetails = async (req, res) => {
       name: name,
       fullName: fullName,
       logoLink: logoLink,
-      interns: intern.length
-        ? intern
-        : { msg: "0 application from this collge" },
-    };
+      interns: intern.length? intern: { msg: "0 application from this collge" }};
 
-    return res.status(200).send({ status: true, data: data });
-  } catch (err) {
-    return res.status(500).send({ status: false, msg: err.message });
-  }
+    return res.status(200).send({ status: true, data: data })}
+
+  catch (err) {return res.status(500).send({ status: false, msg: err.message }); }
 };
 
 // module.exports = {createIntern}
