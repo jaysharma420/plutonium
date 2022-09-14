@@ -2,11 +2,6 @@ const collegeModel = require("../models/CollegeModel");
 const internsModel = require("../models/internsModel");
 
 
-// const isValidString = function(value){   //it should not be like undefined or null.
-//     if (typeof value === 'undefined' || value === null) return false   //if the value is undefined or null it will return false.
-//     if (typeof value === 'string' && value.trim().length === 0) return false   //if the value is string & length is 0 it will return false.
-//     return true
-// }
 const createIntern = async (req,res)=>{
 try{
     let data = req.body
