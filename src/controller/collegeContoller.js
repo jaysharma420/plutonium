@@ -36,16 +36,12 @@ const createCollege = async (req, res) => {
 
 //------------------⭐GET/collegeDetails⭐---------------------------//
 
-//get CollegeDetails by richard
-
-// const createIntern = async (req,res)=>{
-
-//     let data = req.body
-
-//     const datas = await intern.create(data)
-
-//     res.send({data:datas})
-// }
+//get CollegeDetails by Richard
+/*const createIntern = async (req,res)=>{
+    let data = req.body
+    const datas = await intern.create(data)
+    res.send({data:datas})
+}*/
 
 const getCollegeDetails = async (req, res) => {
   try {
