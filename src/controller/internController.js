@@ -12,7 +12,6 @@ try{
     if(!data.email)  { return res.status(400).send({ status: false, msg: "email is required" }) }
     if(!data.collegeName)  { return res.status(400).send({ status: false, msg: "collegeName is required" }) }
 
-    // if(!mongoose.isValidObjectId(data.collegeId)){return res.status(400).send({ status: false, msg: "blogId is not in format"})}
 
     let validString =/^[a-zA-Z]+([_ -]?[a-zA-Z])*$/
     if(!validString.test(data.name)){return res.status(400).send({status:false,msg:"name should be in string "})}
@@ -24,16 +23,18 @@ try{
     }
     let emailExist =await internsModel.findOne({ email: data.email })
     
-    if (emailExist) { return res.status(400).send({ status: false, msg: "Email already exits" }) }
+    if (emailExist) { return res.status(400).send({ status: false, msg: `This ${data.email} email is already exits` }) }
 
 
-    let validNumber = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/   //\d/;
+    let validNumber = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/   
     if(!validNumber.test(data.mobile)){return res.status(400).send({status:false,msg:" please enter 10 digit mobile number in "})}
+    let numberUnique = await internsModel.findOne({mobile: data.mobile})
+    if(numberUnique){ return res.status(400).send({ status: false, msg: `This ${data.mobile} number already exist` })}
     
     let collegeDetails = await collegeModel.findOne({name : data.collegeName}).select({_id:1})
     if(!collegeDetails){return res.status(404).send({ status: false, msg: `No college found with college name ${data.collegeName}` })}
 
-    data["collegeId"] = collegeDetails
+    data["collegeId"] = collegeDetails._id
 
     delete data["collegeName"]
 
