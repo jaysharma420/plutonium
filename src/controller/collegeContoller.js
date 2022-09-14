@@ -48,12 +48,12 @@ const getCollegeDetails = async(req,res)=>{
 
 try{
 
-    const nameClg= req.query
-     let {collegeName} = nameClg
+      const clgName = req.query
+     let {collegeName} = req.query
 
-     if(!college)return res.status(400).send({status:false,msg:"CollgeName is required"})
+     if(!collegeName)return res.status(400).send({status:false,msg:"CollgeName is required"})
 
-     if(Object.keys(req.query))return res.status(400).send({status:false,msg:"enter single query"})
+     if((Object.keys(clgName).length>1))return res.status(400).send({status:false,msg:"enter single query"})
 
      const isValidName = function (value) {
         if (!(value === value.toLowerCase())) {
@@ -61,17 +61,17 @@ try{
         return true
     }
 
-    if(!isValidName(college))return res.status(400).send({status:false,msg:"Invalid-CollegeName-Try name with lowerCase"})
+    if(!isValidName(collegeName))return res.status(400).send({status:false,msg:"Invalid-CollegeName-Try name with lowerCase"})
 
-    const  collegename = await collegeModel.findOne({name:college})
+    const  collegename = await collegeModel.findOne({name:collegeName})
 
     if(!collegename)return res.status(404).send({status:false,msg:"This College not Found"})
 
-    const{name,fullName,logoLink} = collegeName
+    const{name,fullName,logoLink} = collegename
 
     
 
-    const intern = await internsModel.find({collegeId:collegeName._id}).select({name:1,email:1,mobile:1})
+    const intern = await internsModel.find({collegeId:collegename._id}).select({name:1,email:1,mobile:1})
 
 
    const data = {
