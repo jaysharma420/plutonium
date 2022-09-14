@@ -1,11 +1,3 @@
-const intern = require('../models/internsModel')
-
-
-//createIntern Salman
-
-
-
-
 
 
 
