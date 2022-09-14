@@ -1,7 +1,7 @@
 const collegeModel = require("../models/CollegeModel");
 const internsModel = require("../models/internsModel");
 
-validation by => JAY Sharama
+//validation by => JAY Sharama
 const createCollege = async (req, res) => {
   try {
     let data = req.body;
