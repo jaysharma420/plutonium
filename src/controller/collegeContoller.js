@@ -49,7 +49,20 @@ const getCollegeDetails = async(req,res)=>{
 try{
     const college = req.query.collegeName
 
+     if(!college)return res.status(400).send({status:false,msg:"CollgeName is required"})
+
+     const isValidName = function (value) {
+        if (!(value === value.toLowerCase())) {
+            return false
+        }
+        return true
+    }
+
+    if(!isValidName(college))return res.status(400).send({status:false,msg:"Invalid-CollegeName-Try name with lowerCase"})
+
     const  collegeName = await collegeModel.findOne({name:college})
+
+    if(!collegeName)return res.status(404).send({status:false,msg:"This College not Found"})
 
     const{name,fullName,logoLink} = collegeName
 
@@ -67,7 +80,7 @@ try{
    }
 
 
-   res.send({data:data})
+  return res.status(200).send({status:true,data:data})
 
 
 
