@@ -1,9 +1,6 @@
 const collegeModel = require("../models/CollegeModel");
 const internsModel = require("../models/internsModel");
 
-
-
-
 const createIntern = async (req, res) => {
     try {
         let data = req.body
@@ -44,11 +41,19 @@ const createIntern = async (req, res) => {
 
         const intern = await internsModel.create(data)
 
-        res.status(201).send({ status: true, data: intern })
+       return  res.status(201).send({ status: true, data: intern })
 
     } catch (err) {
-        res.status(500).send({ status: false, message: err.message })
+       return  res.status(500).send({ status: false, message: err.message })
     }
 }
 
 module.exports = { createIntern }
+
+
+
+
+
+// let reg = /^[0-9]{10}$/
+// let b = reg.test("6214786985")
+// console.log(b);
