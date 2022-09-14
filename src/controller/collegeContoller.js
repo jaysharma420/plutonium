@@ -1,8 +1,6 @@
 const collegeModel = require("../models/CollegeModel");
 const internsModel = require("../models/internsModel");
 
-//validation by => JAY Sharama
-;
 
 const regname = /^[a-zA-Z]+([_-]?[a-zA-Z])*$/
 const regfname = /^[a-zA-Z]+([_ -]?[a-zA-Z])*$/
