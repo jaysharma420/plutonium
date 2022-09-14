@@ -47,9 +47,13 @@ const createCollege = async (req,res)=>{
 const getCollegeDetails = async(req,res)=>{
 
 try{
-    const college = req.query.collegeName
+
+    const nameClg= req.query
+     let {collegeName} = nameClg
 
      if(!college)return res.status(400).send({status:false,msg:"CollgeName is required"})
+
+     if(Object.keys(req.query))return res.status(400).send({status:false,msg:"enter single query"})
 
      const isValidName = function (value) {
         if (!(value === value.toLowerCase())) {
@@ -60,9 +64,9 @@ try{
 
     if(!isValidName(college))return res.status(400).send({status:false,msg:"Invalid-CollegeName-Try name with lowerCase"})
 
-    const  collegeName = await collegeModel.findOne({name:college})
+    const  collegename = await collegeModel.findOne({name:college})
 
-    if(!collegeName)return res.status(404).send({status:false,msg:"This College not Found"})
+    if(!collegename)return res.status(404).send({status:false,msg:"This College not Found"})
 
     const{name,fullName,logoLink} = collegeName
 
