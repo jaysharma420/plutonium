@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const {createCollege} = require('./src/controller/collegeContoller')
-const{createIntern} = require('./src/controller/internController')
+const {createCollege,getCollegeDetails} = require('./src/controller/collegeContoller')
+
 
 router.get('/test', (req,res)=>
     res.send('API fired 🎇🎇🎇')
@@ -9,9 +9,9 @@ router.get('/test', (req,res)=>
 
 router.post('/functionup/colleges',createCollege)
 
-router.post('/functionup/interns',createIntern)
+// router.post('/functionup/interns',createIntern)
 
-// router.get('/functionup/collegeDetails',getCollegeDetails)
+router.get('/functionup/collegeDetails',getCollegeDetails)
 
 
 
