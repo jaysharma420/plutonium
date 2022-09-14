@@ -57,8 +57,7 @@ try{
 
      const isValidName = function (value) {
         if (!(value === value.toLowerCase())) {
-            return false
-        }
+            return false }
         return true
     }
 
