@@ -67,13 +67,13 @@ const getCollegeDetails = async (req, res) => {
       return res.status(400).send({ status: false, msg: "enter single query" });
 
     const isValidName = function (value) {
-      if (!(value === value.toUpperCase())){
+      if (!(value === value.toLowerCase())){
         return false;}
         return true;
     };
 
     if (!isValidName(collegeName))
-      return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
+      return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowercase abbrevation",});
 
      const collegename = await collegeModel.findOne({ name: collegeName });
 
