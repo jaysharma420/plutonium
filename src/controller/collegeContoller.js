@@ -66,11 +66,11 @@ const getCollegeDetails = async (req, res) => {
     if (Object.keys(clgName).length > 1)
       return res.status(400).send({ status: false, msg: "enter single query" });
 
-    const isValidName = function (value) {
-      if (!(value === value.toUpperCase())){
-        return false;}
-        return true;
-    };
+    // const isValidName = function (value) {
+    //   if (!(value === value.toUpperCase())){
+    //     return false;}
+    //     return true;
+    // };
 //modification
     // if (!isValidName(collegeName))
     //   return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
