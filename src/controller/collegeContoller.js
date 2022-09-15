@@ -55,7 +55,6 @@ const createCollege = async (req, res) => {
 
 //------------------⭐GET/collegeDetails⭐---------------------------//
 
-
 const getCollegeDetails = async (req, res) => {
   try {
     const clgName = req.query;
@@ -66,14 +65,14 @@ const getCollegeDetails = async (req, res) => {
     if (Object.keys(clgName).length > 1)
       return res.status(400).send({ status: false, msg: "enter single query" });
 
-    // const isValidName = function (value) {
-    //   if (!(value === value.toUpperCase())){
-    //     return false;}
-    //     return true;
-    // };
-//modification
-    // if (!isValidName(collegeName))
-    //   return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
+    const isValidName = function (value) {
+      if (!(value === value.tolowerCase())){
+        return false;}  
+        return true;
+    };
+modification
+    if (!isValidName(collegeName))
+      return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowerCase abbrivation"});
 
      const collegename = await collegeModel.findOne({$or:[{ name: collegeName },{fullName:collegeName}]});
 
