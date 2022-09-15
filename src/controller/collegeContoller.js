@@ -3,7 +3,7 @@ const internsModel = require("../models/internsModel");
 
 
 const regname = /^[a-zA-Z]+([_-]?[a-zA-Z])*$/
-const regfname = /^[a-zA-Z]+([_ -]?[a-zA-Z])*$/
+const regfname = /^[a-zA-Z]+([_ -,]?[a-zA-Z])*$/
 let urlreg = /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i
 
 const createCollege = async (req, res) => {
@@ -19,13 +19,14 @@ const createCollege = async (req, res) => {
     if (typeof (name) != "string") return res.status(400).send({ status: false, message: "pls provide name in string type" })
     
     const isValidName = function (value) {
-      if (!(value === value.tolowerCase())){
-        return false;}
-        return true;
-    };
+      if (!(value === value.toLowerCase())) {
+          return false
+      }
+      return true
+  }
 
     if (!isValidName(name))
-      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowercase",});
+      return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowerCase abbrivation"});
 
     
     if (!regname.test(name.trim())) return res.status(400).send({ status: false, message: "plese provide name in a correct format" })
@@ -52,7 +53,6 @@ const createCollege = async (req, res) => {
 };
 
 
-
 //------------------⭐GET/collegeDetails⭐---------------------------//
 
 const getCollegeDetails = async (req, res) => {
@@ -70,7 +70,7 @@ const getCollegeDetails = async (req, res) => {
         return false;}  
         return true;
     };
-modification
+
     if (!isValidName(collegeName))
       return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowerCase abbrivation"});
 
