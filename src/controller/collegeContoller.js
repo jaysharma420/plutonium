@@ -19,13 +19,13 @@ const createCollege = async (req, res) => {
     if (typeof (name) != "string") return res.status(400).send({ status: false, message: "pls provide name in string type" })
     
     const isValidName = function (value) {
-      if (!(value === value.toUpperCase())){
+      if (!(value === value.tolowerCase())){
         return false;}
         return true;
     };
 
     if (!isValidName(name))
-      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with uppercase",});
+      return res .status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowercase",});
 
     
     if (!regname.test(name.trim())) return res.status(400).send({ status: false, message: "plese provide name in a correct format" })
