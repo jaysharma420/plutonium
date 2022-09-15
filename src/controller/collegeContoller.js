@@ -66,7 +66,7 @@ const getCollegeDetails = async (req, res) => {
       return res.status(400).send({ status: false, msg: "enter single query" });
 
     const isValidName = function (value) {
-      if (!(value === value.tolowerCase())){
+      if (!(value === value.toLowerCase())){
         return false;}  
         return true;
     };
