@@ -29,8 +29,9 @@ const createIntern = async (req, res) => {
         if (emailExist) { return res.status(400).send({ status: false, msg: `This ${email} email is already exits` }) }
 
 
-        let validNumber = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
-        if (!validNumber.test(mobile)) { return res.status(400).send({ status: false, msg: " please enter 10 digit mobile number in " }) }
+        let validNumber = /^[6-9]{1}[0-9]{9}$/
+
+        if (!validNumber.test(mobile)) { return res.status(400).send({ status: false, msg: " please enter 10 digit IND mobile number 🇮🇳" }) }
         let numberUnique = await internsModel.findOne({ mobile: mobile })
         if (numberUnique) { return res.status(400).send({ status: false, msg: `This ${mobile} number already exist` }) }
 

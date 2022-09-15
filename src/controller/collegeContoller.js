@@ -3,7 +3,8 @@ const internsModel = require("../models/internsModel");
 
 
 const regname = /^[a-zA-Z]+([_-]?[a-zA-Z])*$/
-const regfname = /^[a-zA-Z]+([_ -,]?[a-zA-Z])*$/
+const regfname = /^[a-zA-Z,'.\s]{0,150}$/
+
 let urlreg = /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i
 
 const createCollege = async (req, res) => {
@@ -29,13 +30,13 @@ const createCollege = async (req, res) => {
       return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with lowerCase abbrivation"});
 
     
-    if (!regname.test(name.trim())) return res.status(400).send({ status: false, message: "plese provide name in a correct format" })
+    if (!regname.test(name.trim())) return res.status(400).send({ status: false, message: "plese provide the name without space" })
     let nmdata = await collegeModel.findOne({ name: name })
     if (nmdata) return res.status(400).send({ status: false, message: "this name is already present" })
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
     if (typeof (fullName) != "string") return res.status(400).send({ status: false, message: "pls provide fullname in string type" })
-    if (!regfname.test(fullName.trim())) return res.status(400).send({ status: false, message: "plese provide fullname in a correct format" })
+    if (!regfname.test(fullName.trim())) return res.status(400).send({ status: false, message: "plese provide fullname, only single space allowed " })
 
     if (!logoLink) return res.status(400).send({ status: false, message: "please provide logolink" })
     if (typeof (logoLink) != "string") return res.status(400).send({ status: false, message: "pls provide logolink in string type" })
@@ -53,7 +54,7 @@ const createCollege = async (req, res) => {
 };
 
 
-//------------------⭐GET/collegeDetails⭐---------------------------//
+//----------------------------⭐GET/collegeDetails⭐----------------------------//
 
 const getCollegeDetails = async (req, res) => {
   try {
@@ -76,7 +77,7 @@ const getCollegeDetails = async (req, res) => {
 
      const collegename = await collegeModel.findOne({$or:[{ name: collegeName },{fullName:collegeName}]});
 
-    if (!collegename)return res.status(404).send({ status: false, msg: "This College not Found" });
+    if (!collegename)return res.status(404).send({ status: false, msg: "This College not Found in the Collection"});
 
     const { name, fullName, logoLink } = collegename;
 
