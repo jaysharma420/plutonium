@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const {createCollege,getCollegeDetails} = require('./src/controller/collegeContoller')
-const {createIntern} = require('./src/controller/internController')
+const {createCollege,getCollegeDetails} = require('./controller/collegeContoller')
+const {createIntern} = require('./controller/internController')
 
 
 router.get('/test', (req,res)=>
