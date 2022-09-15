@@ -71,18 +71,17 @@ const getCollegeDetails = async (req, res) => {
         return false;}
         return true;
     };
+//modification
+    // if (!isValidName(collegeName))
+    //   return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
 
-    if (!isValidName(collegeName))
-      return res.status(400).send({status: false,msg: "Invalid-CollegeName-Try name with UpperCase",});
-
-     const collegename = await collegeModel.findOne({ name: collegeName });
+     const collegename = await collegeModel.findOne({$or:[{ name: collegeName },{fullName:collegeName}]});
 
     if (!collegename)return res.status(404).send({ status: false, msg: "This College not Found" });
 
     const { name, fullName, logoLink } = collegename;
 
-    const intern = await internsModel
-      .find({ collegeId: collegename._id })
+    const intern = await internsModel.find({ collegeId: collegename._id })
       .select({ name: 1, email: 1, mobile: 1 });
 
     const data = {
