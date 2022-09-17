@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const route = require('./src/route')
 const app = express()
-const PORT = 3000 || process.env.PORT 
+const PORT =3000 || process.env.PORT 
 
 app.use(express.json())
 
@@ -15,8 +15,6 @@ mongoose.connect('mongodb+srv://richardwork:2YLjcp0favzUASR9@cluster3.bli4t.mong
 app.use('/',route)
 
 app.use(function (req, res) {
-    var err = new Error('Not Found');
-    // err.status =;
     return res.status(400).send({status : false, msg : "path not found"})
     });
 

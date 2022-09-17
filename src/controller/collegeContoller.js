@@ -15,7 +15,7 @@ const createCollege = async (req, res) => {
 
     const { name, fullName, logoLink ,isDeleted} = data
 
-    if (!name) return res.status(400).send({ status: false, message: "please provide name" })
+    if (!name) return res.status(400).send({ status: false, message: "please provide  colege name" })
 
     if (typeof (name) != "string") return res.status(400).send({ status: false, message: "pls provide name in string type" })
     
@@ -36,7 +36,7 @@ const createCollege = async (req, res) => {
 
     if (!fullName) return res.status(400).send({ status: false, message: "please provide fullname" })
     if (typeof (fullName) != "string") return res.status(400).send({ status: false, message: "pls provide fullname in string type" })
-    if (!regfname.test(fullName.trim())) return res.status(400).send({ status: false, message: "plese provide fullname, only single space allowed " })
+    if (!regfname.test(fullName.trim())) return res.status(400).send({ status: false, message: "plese provide fullname in a correct format" })
 
     if (!logoLink) return res.status(400).send({ status: false, message: "please provide logolink" })
     if (typeof (logoLink) != "string") return res.status(400).send({ status: false, message: "pls provide logolink in string type" })
@@ -63,7 +63,7 @@ const getCollegeDetails = async (req, res) => {
 
     if (!collegeName)return res.status(400).send({ status: false, msg: "CollgeName is required" });
 
-    if (Object.keys(clgName).length > 1)
+    if (Object.keys(clgName).length != 1)
       return res.status(400).send({ status: false, msg: "enter single query" });
 
     const isValidName = function (value) {
