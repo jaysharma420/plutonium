@@ -26,7 +26,7 @@ const createreview = async function (req, res) {
         })
         if (bookdata.isDeleted == true) return res.status(404).send({
             status: false,
-            message: "book is already deleted "
+            message: "book is not found"
         })
         let { bookId, reviewedBy, reviewedAt, rating, review } = data
 
@@ -85,7 +85,7 @@ if(bookId){
         })
 
         let createreview = await reviewModel.create(data)
-        let reviewdata = await reviewModel.find({ bookId })
+        let reviewdata = await reviewModel.find({ bookId:id })
 
         let updatebook = await bookModel.findOneAndUpdate({
             _id: id
@@ -198,7 +198,7 @@ const updatereview = async function (req, res) {
         }, {
             new: true
         })
-        const reviews = await reviewModel.find({ bookId })
+        const reviews = await reviewModel.find({ bookId : bookId})
 
         book._doc['reviewsData'] = reviews
 
@@ -257,12 +257,12 @@ const deletereview = async function (req, res) {
 
         if (!checkReview) return res.status(404).send({
             status: false,
-            message: "Invalid reviewId ...!!"
+            message: "Invalid reviewId ...!! or no data with this reviewid"
         })
 
         if (checkReview.isDeleted == true) return res.status(404).send({
             status: false,
-            message: "Review is already deleted ..!!"
+            message: "Review not found"
         })
 
         let deleteReview = await reviewModel.findOneAndUpdate({
