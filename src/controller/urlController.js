@@ -34,30 +34,30 @@ const urlShortener = async function (req, res) {
         if (!longUrl) {
             return res.status(400).send({ status: false, message: "LongUrl is mandatory" })
         }
-          // making promise
-          let obj={
-            method:"get",
-            url:longUrl
+        // making promise
+        let obj = {
+            method: "get",
+            url: longUrl
         }
-        let urlFound=false
-        let urlF = await axios(obj).then(()=>urlFound=true).catch(()=>{urlFound=false});
-        if(!urlF){
-            return res.status(400).send({status:false,message:"Please give valid longUrl"})
+        let urlFound = false
+        let urlF = await axios(obj).then(() => urlFound = true).catch(() => { urlFound = false });
+        if (!urlF) {
+            return res.status(400).send({ status: false, message: "Please give valid longUrl" })
         }
-        
+
 
         let getDetails = await GET_ASYNC(`${longUrl}`)
         // console.log(JSON.parse(getDetails))
         if (getDetails) {
-            return res.send({ message: "data fetch from cache", data: JSON.parse(getDetails) })
+            return res.status(201).send({ message: "data fetch from cache", data: JSON.parse(getDetails) })
         }
 
         let existUrl = await urlModel.findOne({ longUrl }).select({ _id: 0, longUrl: 1, shortUrl: 1, urlCode: 1 })
         if (existUrl) {
-            return res.status(200).send({ message: "data from db", status: true, data: existUrl })
+            return res.status(201).send({ message: "data from db", status: true, data: existUrl })
         }
-      
-        
+
+
         let baseUrl = "http://localhost:3000"
         const urlCode = shortId.generate().toLowerCase()
 
@@ -92,7 +92,7 @@ const getUrl = async function (req, res) {
         }
 
         let urlData = await urlModel.findOne({ urlCode })
-        if (!urlData) return res.status(404).send({ status: false, message: `no url found with this ${urlCode}` })
+    if (!urlData) return res.status(404).send({status:false,message:`no url found with this urlcode ${urlCode}` })
         await SET_ASYNC(`${urlCode}`, JSON.stringify(urlData))
 
         return res.redirect(302, urlData.longUrl)

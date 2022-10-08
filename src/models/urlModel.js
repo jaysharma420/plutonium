@@ -4,8 +4,7 @@ const urlSchema = new mongoose.Schema({
     urlCode : {
         required : true,
         type : String, 
-        unique : true,
-        trim : true
+        unique : true
     },
     longUrl : {
         required : true,
